@@ -1,0 +1,7 @@
+# Editor
+.vscode/
+.idea/
+
+# Logs de errores de PHP
+*.log
+error_log
