@@ -1,0 +1,29 @@
+CREATE DATABASE IF NOT EXISTS crossy_road;
+
+CREATE TABLE IF NOT EXISTS usuario (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE partida (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  puntaje INT NOT NULL,
+  duracion_segundos INT DEFAULT NULL,
+  fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+);
+
+DELIMITER $$
+
+CREATE FUNCTION getCantidadPartidas(usuarioId INT)
+RETURNS INT
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE cantidad INT;
+    SELECT COUNT(*) INTO cantidad FROM partida WHERE usuario_id = usuarioId;
+    RETURN cantidad;
+END$$
+
+DELIMITER ;
